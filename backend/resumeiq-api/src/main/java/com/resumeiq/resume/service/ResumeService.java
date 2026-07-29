@@ -11,6 +11,8 @@ import com.resumeiq.resume.dto.response.ResumeResponse;
 import com.resumeiq.resume.entity.Resume;
 import com.resumeiq.resume.mapper.ResumeMapper;
 import com.resumeiq.resume.repository.ResumeRepository;
+import com.resumeiq.resume.service.parser.ResumeParser;
+import com.resumeiq.resume.service.parser.ResumeParserFactory;
 import com.resumeiq.resume.service.storage.StorageService;
 import com.resumeiq.resume.service.storage.StoredFile;
 
@@ -22,12 +24,10 @@ import lombok.RequiredArgsConstructor;
 public class ResumeService {
 
     private final ResumeRepository resumeRepository;
-
     private final UserRepository userRepository;
-
     private final ResumeMapper resumeMapper;
-
     private final StorageService storageService;
+    private final ResumeParserFactory parserFactory;
 
     public ResumeResponse upload(MultipartFile file, String email) {
 
@@ -39,24 +39,20 @@ public class ResumeService {
         Resume resume = new Resume();
 
         resume.setUser(user);
-
         resume.setOriginalFileName(file.getOriginalFilename());
-
         resume.setStoredFileName(storedFile.getStoredFileName());
-
         resume.setStoragePath(storedFile.getStoragePath());
-
         resume.setContentType(file.getContentType());
-
         resume.setFileSize(file.getSize());
 
-        // Will be populated in the next milestone
-        resume.setExtractedText("");
+        ResumeParser parser = parserFactory.getParser(file);
+        String extractedText = parser.extractText(file);
+
+        resume.setExtractedText(extractedText);
 
         Resume savedResume = resumeRepository.save(resume);
 
         return resumeMapper.toResponse(savedResume);
-
     }
 
 }

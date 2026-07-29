@@ -40,8 +40,7 @@ public class Resume extends BaseEntity {
     @Column(nullable = false)
     private String storagePath;
 
-    @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String extractedText;
 
 }
