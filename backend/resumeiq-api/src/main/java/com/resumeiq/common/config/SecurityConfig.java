@@ -1,4 +1,4 @@
-package com.resumeiq.config;
+package com.resumeiq.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,9 @@ public class SecurityConfig {
                 		.requestMatchers(
                 		        "/api/v1/health",
                 		        "/actuator/health",
+                		        
                 		        "/api/v1/auth/register",
+                		        "/api/v1/auth/login",
 
                 		        "/swagger-ui/**",
                 		        "/swagger-ui.html",

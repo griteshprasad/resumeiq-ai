@@ -1,4 +1,4 @@
-package com.resumeiq.config;
+package com.resumeiq.common.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
