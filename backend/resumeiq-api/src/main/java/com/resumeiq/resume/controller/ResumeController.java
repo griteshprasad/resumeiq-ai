@@ -1,8 +1,14 @@
 package com.resumeiq.resume.controller;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -32,7 +38,47 @@ public class ResumeController {
                         true,
                         "Resume uploaded successfully.",
                         response));
+    }
+    
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ResumeResponse>>> getAll(Authentication authentication) {
 
+        List<ResumeResponse> response = resumeService.getAll(authentication.getName());
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        true,
+                        "Resumes fetched successfully.",
+                        response));
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<ResumeResponse>> getById(@PathVariable UUID id, Authentication authentication) {
+
+        ResumeResponse response =
+                resumeService.getById(
+                        id,
+                        authentication.getName());
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        true,
+                        "Resume fetched successfully.",
+                        response));
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable UUID id, Authentication authentication) {
+
+        resumeService.delete(
+                id,
+                authentication.getName());
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        true,
+                        "Resume deleted successfully.",
+                        null));
     }
 
 }

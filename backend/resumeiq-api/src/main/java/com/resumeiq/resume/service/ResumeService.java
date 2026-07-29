@@ -1,5 +1,9 @@
 package com.resumeiq.resume.service;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +57,46 @@ public class ResumeService {
         Resume savedResume = resumeRepository.save(resume);
 
         return resumeMapper.toResponse(savedResume);
+    }
+    
+    public List<ResumeResponse> getAll(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+        return resumeRepository.findAllByUserOrderByCreatedAtDesc(user)
+                .stream()
+                .map(resumeMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+    
+    public ResumeResponse getById(UUID id, String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+        Resume resume = resumeRepository
+                .findByIdAndUser(id, user)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Resume not found."));
+
+        return resumeMapper.toResponse(resume);
+    }
+    
+    public void delete(UUID id, String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+        Resume resume = resumeRepository
+                .findByIdAndUser(id, user)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Resume not found."));
+
+        storageService.delete(resume.getStoragePath());
+
+        resumeRepository.delete(resume);
+
     }
 
 }

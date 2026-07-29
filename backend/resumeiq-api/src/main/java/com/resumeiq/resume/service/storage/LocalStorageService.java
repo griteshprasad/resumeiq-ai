@@ -56,5 +56,22 @@ public class LocalStorageService implements StorageService {
         }
 
     }
+    
+    @Override
+    public void delete(String storagePath) {
+
+        try {
+
+            Files.deleteIfExists(Paths.get(storagePath));
+
+        } catch (IOException ex) {
+
+            throw new RuntimeException(
+                    "Unable to delete file.",
+                    ex);
+
+        }
+
+    }
 
 }
