@@ -33,7 +33,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+    private final JwtService jwtService;	
     private final CustomUserDetailsService customUserDetailsService;
 
     public RegisterResponse register(RegisterRequest request) {
@@ -70,7 +70,8 @@ public class AuthService {
 
         return new LoginResponse(
                 token,
-                "Bearer");
+                "Bearer", 
+                jwtService.getExpiration());
     }
 
 }
