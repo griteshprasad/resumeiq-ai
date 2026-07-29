@@ -1,4 +1,4 @@
-package com.resumeiq.resume.service.storage;
+package com.resumeiq.common.document.storage;
 
 import java.io.IOException;
 import java.nio.file.Files;

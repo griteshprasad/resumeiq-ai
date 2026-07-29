@@ -1,4 +1,4 @@
-package com.resumeiq.resume.service.parser;
+package com.resumeiq.common.document.parser;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ResumeParserFactory {
+public class DocumentParserFactory {
 
-    private final List<ResumeParser> parsers;
+    private final List<DocumentParser> parsers;
 
-    public ResumeParser getParser(MultipartFile file) {
+    public DocumentParser getParser(MultipartFile file) {
 
         return parsers.stream()
                 .filter(parser -> parser.supports(file))

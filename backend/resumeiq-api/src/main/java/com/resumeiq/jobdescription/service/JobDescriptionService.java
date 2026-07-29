@@ -1,4 +1,4 @@
-package com.resumeiq.resume.service;
+package com.resumeiq.jobdescription.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,72 +15,72 @@ import com.resumeiq.common.document.parser.DocumentParserFactory;
 import com.resumeiq.common.document.storage.StorageService;
 import com.resumeiq.common.document.storage.StoredFile;
 import com.resumeiq.common.exception.ResourceNotFoundException;
-import com.resumeiq.resume.dto.response.ResumeResponse;
-import com.resumeiq.resume.entity.Resume;
-import com.resumeiq.resume.mapper.ResumeMapper;
-import com.resumeiq.resume.repository.ResumeRepository;
+import com.resumeiq.jobdescription.dto.response.JobDescriptionResponse;
+import com.resumeiq.jobdescription.entity.JobDescription;
+import com.resumeiq.jobdescription.mapper.JobDescriptionMapper;
+import com.resumeiq.jobdescription.repository.JobDescriptionRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ResumeService {
+public class JobDescriptionService {
 
-    private final ResumeRepository resumeRepository;
+    private final JobDescriptionRepository jobDescriptionRepository;
     private final UserRepository userRepository;
-    private final ResumeMapper resumeMapper;
+    private final JobDescriptionMapper jobDescriptionMapper;
     private final StorageService storageService;
     private final DocumentParserFactory parserFactory;
 
-    public ResumeResponse upload(MultipartFile file, String email) {
+    public JobDescriptionResponse upload(MultipartFile file, String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         StoredFile storedFile = storageService.store(file);
 
-        Resume resume = new Resume();
+        JobDescription jobDescription = new JobDescription();
 
-        resume.setUser(user);
-        resume.setOriginalFileName(file.getOriginalFilename());
-        resume.setStoredFileName(storedFile.getStoredFileName());
-        resume.setStoragePath(storedFile.getStoragePath());
-        resume.setContentType(file.getContentType());
-        resume.setFileSize(file.getSize());
+        jobDescription.setUser(user);
+        jobDescription.setOriginalFileName(file.getOriginalFilename());
+        jobDescription.setStoredFileName(storedFile.getStoredFileName());
+        jobDescription.setStoragePath(storedFile.getStoragePath());
+        jobDescription.setContentType(file.getContentType());
+        jobDescription.setFileSize(file.getSize());
 
         DocumentParser parser = parserFactory.getParser(file);
         String extractedText = parser.extractText(file);
 
-        resume.setExtractedText(extractedText);
+        jobDescription.setExtractedText(extractedText);
 
-        Resume savedResume = resumeRepository.save(resume);
+        JobDescription savedJobDescription = jobDescriptionRepository.save(jobDescription);
 
-        return resumeMapper.toResponse(savedResume);
+        return jobDescriptionMapper.toResponse(savedJobDescription);
     }
     
-    public List<ResumeResponse> getAll(String email) {
+    public List<JobDescriptionResponse> getAll(String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
-        return resumeRepository.findAllByUserOrderByCreatedAtDesc(user)
+        return jobDescriptionRepository.findAllByUserOrderByCreatedAtDesc(user)
                 .stream()
-                .map(resumeMapper::toResponse)
+                .map(jobDescriptionMapper::toResponse)
                 .collect(Collectors.toList());
     }
     
-    public ResumeResponse getById(UUID id, String email) {
+    public JobDescriptionResponse getById(UUID id, String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
-        Resume resume = resumeRepository
+        JobDescription jobDescription = jobDescriptionRepository
                 .findByIdAndUser(id, user)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Resume not found."));
+                        new ResourceNotFoundException("JobDescription not found."));
 
-        return resumeMapper.toResponse(resume);
+        return jobDescriptionMapper.toResponse(jobDescription);
     }
     
     public void delete(UUID id, String email) {
@@ -88,14 +88,14 @@ public class ResumeService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
-        Resume resume = resumeRepository
+        JobDescription jobDescription = jobDescriptionRepository
                 .findByIdAndUser(id, user)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Resume not found."));
+                        new ResourceNotFoundException("JobDescription not found."));
 
-        storageService.delete(resume.getStoragePath());
+        storageService.delete(jobDescription.getStoragePath());
 
-        resumeRepository.delete(resume);
+        jobDescriptionRepository.delete(jobDescription);
 
     }
 

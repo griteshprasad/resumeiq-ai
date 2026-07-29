@@ -1,4 +1,4 @@
-package com.resumeiq.resume.service.parser;
+package com.resumeiq.common.document.parser;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class PdfResumeParser implements ResumeParser {
+public class PdfDocumentParser implements DocumentParser {
 
     @Override
     public boolean supports(MultipartFile file) {

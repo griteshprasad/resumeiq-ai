@@ -1,4 +1,4 @@
-package com.resumeiq.resume.service.storage;
+package com.resumeiq.common.document.storage;
 
 import org.springframework.web.multipart.MultipartFile;
 
