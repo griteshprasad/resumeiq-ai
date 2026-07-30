@@ -16,7 +16,7 @@ public class AiService {
 
     private final AiClient aiClient;
 
-    public String chat(String prompt) {
+    public String generateResponse(String prompt) {
 
         LOGGER.info("Sending prompt to AI.");
 

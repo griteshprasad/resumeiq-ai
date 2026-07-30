@@ -24,7 +24,7 @@ public class AiController {
     @PostMapping("/chat")
     public ResponseEntity<ApiResponse<ChatResponse>> chat( @Validated @RequestBody ChatRequest request) {
 
-        String answer = aiService.chat(request.getPrompt());
+        String answer = aiService.generateResponse(request.getPrompt());
 
         ChatResponse response = new ChatResponse(answer);
 

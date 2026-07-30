@@ -98,5 +98,17 @@ public class JobDescriptionService {
         jobDescriptionRepository.delete(jobDescription);
 
     }
+    
+    public JobDescription getEntityById(UUID id, String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found."));
+
+        return jobDescriptionRepository
+                .findByIdAndUser(id, user)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Resume not found."));
+    }
 
 }

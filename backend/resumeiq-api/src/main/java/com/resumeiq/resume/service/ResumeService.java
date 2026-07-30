@@ -99,4 +99,14 @@ public class ResumeService {
 
     }
 
+    public Resume getEntityById(UUID id, String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+        return resumeRepository
+                .findByIdAndUser(id, user)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Resume not found."));
+    }
 }
