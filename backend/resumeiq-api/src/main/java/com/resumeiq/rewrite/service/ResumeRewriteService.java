@@ -1,7 +1,5 @@
 package com.resumeiq.rewrite.service;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
 import com.resumeiq.ai.service.AiService;
@@ -33,10 +31,9 @@ public class ResumeRewriteService {
 
 		JobDescription jobDescription = jobDescriptionService.getEntityById(request.getJobDescriptionId(), email);
 
-		String prompt = promptBuilder.buildPrompt(resume.getExtractedText(), jobDescription.getExtractedText(), request.getSection());
+		String prompt = promptBuilder.buildPrompt(resume.getExtractedText(), jobDescription.getExtractedText(), request.getInstructions());
 
 		return aiService.generateResponse(prompt, RewriteResumeResponse.class);
-
 	}
 
 }

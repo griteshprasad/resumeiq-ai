@@ -1,20 +1,24 @@
 package com.resumeiq.rewrite.dto.request;
 
+import java.util.List;
 import java.util.UUID;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class RewriteResumeRequest {
 
-    @NotNull(message = "Resume Id is required.")
+    @NotNull
     private UUID resumeId;
 
-    @NotNull(message = "Job Description Id is required.")
+    @NotNull
     private UUID jobDescriptionId;
 
-    @NotNull(message = "Section is required.")
-    private ResumeSectionType section;
+    @Valid
+    @NotEmpty
+    private List<RewriteInstruction> instructions;
 
 }

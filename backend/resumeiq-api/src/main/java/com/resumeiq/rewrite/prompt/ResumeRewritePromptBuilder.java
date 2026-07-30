@@ -1,70 +1,81 @@
 package com.resumeiq.rewrite.prompt;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
-import com.resumeiq.rewrite.dto.request.ResumeSectionType;
+import com.resumeiq.rewrite.dto.request.RewriteInstruction;
 
 @Component
 public class ResumeRewritePromptBuilder {
 
-    public String buildPrompt(String resumeText, String jobDescriptionText, ResumeSectionType section) {
+	public String buildPrompt(String resumeText, String jobDescriptionText, List<RewriteInstruction> instructions) {
 
-        StringBuilder prompt = new StringBuilder();
+		StringBuilder prompt = new StringBuilder();
 
-        prompt.append("""
-You are an expert resume writer, ATS specialist and technical recruiter.
+		prompt.append("""
+				You are an expert resume writer, ATS specialist, and technical recruiter.
 
-Your task is to rewrite ONLY the requested resume section.
+				Your task is to rewrite ONLY the requested resume sections.
 
-Rules:
+				Rules:
 
-1. Rewrite ONLY the requested section.
-2. Do NOT rewrite any other section.
-3. Optimize for ATS.
-4. Include relevant keywords from the Job Description naturally.
-5. Do not invent fake experience.
-6. Do not exaggerate.
-7. Keep the candidate's experience truthful.
-8. Improve grammar and readability.
-9. Return ONLY valid JSON.
-10. Do NOT use markdown.
-11. Do NOT wrap the response inside ```.
+				1. Rewrite ONLY the requested sections.
+				2. Do NOT modify any other sections.
+				3. Optimize each section for ATS.
+				4. Naturally include relevant keywords from the Job Description.
+				5. Do NOT invent fake experience.
+				6. Do NOT exaggerate achievements.
+				7. Keep the candidate's information truthful.
+				8. Improve grammar, readability, and professionalism.
+				9. Return ONLY valid JSON.
+				10. Do NOT use markdown.
+				11. Do NOT wrap the response inside ```.
 
-The JSON MUST be exactly:
+				Return EXACTLY this JSON structure:
 
-{
-    "rewrittenContent":"",
-    "explanation":""
-}
+				{
+				  "rewrittenSections": [
+				    {
+				      "section": "",
+				      "rewrittenContent": "",
+				      "explanation": ""
+				    }
+				  ]
+				}
 
-Requested Resume Section:
+				Rewrite the following sections:
 
-""");
+				""");
 
-        prompt.append(section.name());
+		int index = 1;
 
-        prompt.append("""
+		for (RewriteInstruction instruction : instructions) {
 
-=========================================
-RESUME
-=========================================
+			prompt.append(index++).append(". Section: ").append(instruction.getSection().name()).append("\n");
 
-""");
+			prompt.append("   Goal: ").append(instruction.getGoal()).append("\n\n");
+		}
 
-        prompt.append(resumeText);
+		prompt.append("""
+				=========================================
+				RESUME
+				=========================================
 
-        prompt.append("""
+				""");
 
-=========================================
-JOB DESCRIPTION
-=========================================
+		prompt.append(resumeText);
 
-""");
+		prompt.append("""
 
-        prompt.append(jobDescriptionText);
+				=========================================
+				JOB DESCRIPTION
+				=========================================
 
-        return prompt.toString();
+				""");
 
-    }
+		prompt.append(jobDescriptionText);
 
+		return prompt.toString();
+	}
 }
