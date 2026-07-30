@@ -34,3 +34,9 @@ build/
 
 # Local uploaded resumes
 uploads/
+
+# Local developer configuration
+src/main/resources/application-dev.properties
+
+# Future production configuration
+src/main/resources/application-prod.properties
