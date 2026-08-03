@@ -1,0 +1,63 @@
+<mat-card class="score-card">
+
+  <mat-card-header>
+
+    <mat-card-title>
+
+      Resume Match Score
+
+    </mat-card-title>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div class="progress-wrapper">
+
+      <svg
+        class="progress-ring"
+        width="180"
+        height="180">
+
+        <circle
+          class="track"
+          cx="90"
+          cy="90"
+          [attr.r]="radius">
+        </circle>
+
+        <circle
+          class="progress"
+          [ngClass]="progressClass()"
+          cx="90"
+          cy="90"
+          [attr.r]="radius"
+          [attr.stroke-dasharray]="circumference"
+          [attr.stroke-dashoffset]="progressOffset()">
+        </circle>
+
+      </svg>
+
+      <div class="score-text">
+
+        {{ feedback().atsScore }}%
+
+      </div>
+
+    </div>
+
+    <h2>
+
+      {{ scoreStatus() }}
+
+    </h2>
+
+    <p>
+
+      {{ feedback().summary }}
+
+    </p>
+
+  </mat-card-content>
+
+</mat-card>

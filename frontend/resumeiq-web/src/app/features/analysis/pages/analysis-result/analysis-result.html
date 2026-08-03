@@ -1,1 +1,193 @@
-<p>analysis-result works!</p>
+<app-page-header title="Resume Analysis" subtitle="Compare a resume against a job description.">
+
+</app-page-header>
+
+<form [formGroup]="analysisForm" (ngSubmit)="analyze()">
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Resume</mat-label>
+
+    <mat-select formControlName="resumeId">
+
+      @for (resume of resumes; track resume.id) {
+
+      <mat-option [value]="resume.id">
+
+        {{ resume.originalFileName }}
+
+      </mat-option>
+
+      }
+
+    </mat-select>
+
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Job Description</mat-label>
+
+    <mat-select formControlName="jobDescriptionId">
+
+      @for (jobDescription of jobDescriptions; track jobDescription.id) {
+
+      <mat-option [value]="jobDescription.id">
+
+        {{ jobDescription.originalFileName }}
+
+      </mat-option>
+
+      }
+
+    </mat-select>
+
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+
+    Analyze Resume
+
+  </button>
+
+</form>
+
+@if (isAnalyzing) {
+
+<p>Analyzing resume...</p>
+
+}
+
+@if (analysis) {
+
+<app-ats-score-card [feedback]="analysis.atsFeedback">
+</app-ats-score-card>
+
+<div class="feedback-grid">
+
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon color="primary">verified</mat-icon>
+        Strengths
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <ul>
+
+        @for (strength of analysis.atsFeedback.strengths; track strength) {
+
+        <li>{{ strength }}</li>
+
+        }
+
+      </ul>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <mat-card>
+
+    <mat-card-header>
+
+      <mat-card-title>
+
+        <mat-icon color="warn">warning</mat-icon>
+
+        Weaknesses
+
+      </mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <ul>
+
+        @for (weakness of analysis.atsFeedback.weaknesses; track weakness) {
+
+        <li>{{ weakness }}</li>
+
+        }
+
+      </ul>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+<mat-card class="analysis-card">
+
+  <mat-card-header>
+
+    <mat-card-title>
+
+      Missing Keywords
+
+    </mat-card-title>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <mat-chip-set>
+
+      @for (keyword of analysis.atsFeedback.missingKeywords; track keyword) {
+
+      <mat-chip>
+
+        {{ keyword }}
+
+      </mat-chip>
+
+      }
+
+    </mat-chip-set>
+
+  </mat-card-content>
+
+</mat-card>
+
+<mat-card class="analysis-card">
+
+  <mat-card-header>
+
+    <mat-card-title>
+
+      AI Suggestions
+
+    </mat-card-title>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    @for (improvement of analysis.improvements; track improvement.section) {
+
+    <div class="improvement">
+
+      <h3>{{ improvement.section }}</h3>
+
+      <p><strong>Issue:</strong> {{ improvement.issue }}</p>
+
+      <p><strong>Suggestion:</strong> {{ improvement.suggestion }}</p>
+
+      <p><strong>Reason:</strong> {{ improvement.reason }}</p>
+
+    </div>
+
+    <mat-divider></mat-divider>
+
+    }
+
+  </mat-card-content>
+
+</mat-card>
+
+}
