@@ -1,12 +1,51 @@
-.logo {
+.header {
+  height: 64px;
+  padding: 0 24px;
+  background: #ffffff;
+  color: #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #2563eb;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #6b7280;
 }
 
 .spacer {
   flex: 1;
 }
 
-.user-name {
-  margin-right: 16px;
+.user-section button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #374151;
+}
+
+.user-section mat-icon:first-child {
+  color: #2563eb;
 }

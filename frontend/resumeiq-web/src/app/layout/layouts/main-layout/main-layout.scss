@@ -1,12 +1,17 @@
 .layout-container {
   height: 100vh;
+  background: #f8fafc;
 }
 
-mat-sidenav {
+.sidebar {
   width: 260px;
-  border-right: 1px solid #e0e0e0;
+  border-right: none;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
 }
 
 .content {
-  padding: 24px;
+  padding: 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }

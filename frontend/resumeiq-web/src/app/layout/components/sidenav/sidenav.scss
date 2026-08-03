@@ -1,8 +1,39 @@
-.active {
-  background: rgba(25, 118, 210, 0.12);
-  border-radius: 8px;
+:host {
+  display: block;
+  height: 100%;
+}
+
+mat-nav-list {
+  padding: 16px;
+}
+
+.navigation-title {
+  padding: 0 16px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+a.mat-mdc-list-item {
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+a.mat-mdc-list-item:hover {
+  background: #f3f4f6;
+}
+
+a.active {
+  background: #2563eb;
+}
+
+a.active .mdc-list-item__primary-text,
+a.active mat-icon {
+  color: white;
 }
 
 mat-icon {
-  margin-right: 12px;
+  color: #6b7280;
 }

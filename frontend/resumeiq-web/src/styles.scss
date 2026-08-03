@@ -7,3 +7,45 @@
   --mdc-snackbar-container-color: #d32f2f;
   --mat-snack-bar-button-color: #ffffff;
 }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
+  color: #1f2937;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mat-mdc-header-row {
+  background: #f9fafb;
+}
+
+.mat-mdc-row:hover {
+  background: #f8fafc;
+}
+
+.mat-mdc-raised-button {
+  border-radius: 10px !important;
+}
+
+.cdk-overlay-container {
+  z-index: 2000;
+}
+
+.cdk-overlay-pane {
+  z-index: 2001;
+}
