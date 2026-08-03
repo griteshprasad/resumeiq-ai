@@ -12,6 +12,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { FileSizePipe } from '../../../../shared/pipes/file-size-pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NotificationService } from '../../../../core/services/notification';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-resume-list',
@@ -23,7 +24,8 @@ import { NotificationService } from '../../../../core/services/notification';
     MatIconModule,
     MatProgressSpinnerModule,
     DatePipe,
-    FileSizePipe
+    FileSizePipe,
+    PageHeader
   ],
   templateUrl: './resume-list.html',
   styleUrl: './resume-list.scss'
