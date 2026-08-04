@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Rewrite } from './rewrite';
+import { ResumeRewrite } from './resume-rewrite';
 
-describe('Rewrite', () => {
-  let component: Rewrite;
-  let fixture: ComponentFixture<Rewrite>;
+describe('ResumeRewrite', () => {
+  let component: ResumeRewrite;
+  let fixture: ComponentFixture<ResumeRewrite>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Rewrite],
+      imports: [ResumeRewrite],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Rewrite);
+    fixture = TestBed.createComponent(ResumeRewrite);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

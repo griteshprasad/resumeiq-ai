@@ -1,7 +1,5 @@
 package com.resumeiq.common.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,13 +8,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.resumeiq.ai.exception.AiPromptException;
 import com.resumeiq.ai.exception.AiProviderException;
+import com.resumeiq.ai.exception.AiQuotaExceededException;
 import com.resumeiq.ai.exception.AiResponseParsingException;
 import com.resumeiq.common.dto.ApiResponse;
 
-@RestControllerAdvice
-public class GlobalExceptionHandler {
+import lombok.extern.slf4j.Slf4j;
 
-	private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ApiResponse<Void>> handleResourceNotFound(ResourceNotFoundException ex) {
@@ -50,8 +50,19 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(AiProviderException.class)
 	public ResponseEntity<ApiResponse<Void>> handleAiProviderException(AiProviderException ex) {
 
+		log.error("AI Rewrite failed.", ex);
+		
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
 				.body(new ApiResponse<>(false, "AI service is currently unavailable.", null));
+	}
+	
+	@ExceptionHandler(AiQuotaExceededException.class)
+	public ResponseEntity<ApiResponse<Void>> handleAiProviderException(AiQuotaExceededException ex) {
+
+		log.error("AI Quota exceeded.", ex);
+		
+		return ResponseEntity.status(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED)
+				.body(new ApiResponse<>(false, "AI quota exceeded. Please try again later.", null));
 	}
 
 	@ExceptionHandler(Exception.class)

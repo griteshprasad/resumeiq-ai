@@ -1,0 +1,194 @@
+<app-page-header
+  title="AI Resume Rewrite"
+  subtitle="Rewrite selected sections of your resume using AI">
+</app-page-header>
+
+<mat-card>
+
+  <mat-card-content>
+
+    <form
+      [formGroup]="rewriteForm"
+      (ngSubmit)="rewrite()">
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Resume</mat-label>
+
+          <mat-select formControlName="resumeId">
+
+            @for (resume of resumes; track resume.id) {
+
+              <mat-option [value]="resume.id">
+
+                {{ resume.originalFileName }}
+
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Job Description</mat-label>
+
+          <mat-select formControlName="jobDescriptionId">
+
+            @for (job of jobDescriptions; track job.id) {
+
+              <mat-option [value]="job.id">
+
+                {{ job.originalFileName }}
+
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+      <h2>Rewrite Instructions</h2>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Professional Summary Goal</mat-label>
+
+        <textarea
+          matInput
+          rows="3"
+          formControlName="professionalSummaryGoal">
+        </textarea>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Experience Goal</mat-label>
+
+        <textarea
+          matInput
+          rows="3"
+          formControlName="experienceGoal">
+        </textarea>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Skills Goal</mat-label>
+
+        <textarea
+          matInput
+          rows="3"
+          formControlName="skillsGoal">
+        </textarea>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Education Goal</mat-label>
+
+        <textarea
+          matInput
+          rows="3"
+          formControlName="educationGoal">
+        </textarea>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Projects Goal</mat-label>
+
+        <textarea
+          matInput
+          rows="3"
+          formControlName="projectsGoal">
+        </textarea>
+
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="isLoading">
+
+        @if(isLoading){
+
+          <mat-spinner diameter="20"></mat-spinner>
+
+        } @else {
+
+          Rewrite Resume
+
+        }
+
+      </button>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>
+
+@if(rewriteResult){
+
+<mat-card class="result-card">
+
+  <mat-card-header>
+
+    <mat-card-title>
+
+      AI Rewrite Result
+
+    </mat-card-title>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    @for(section of rewriteResult.rewrittenSections; track section.section){
+
+    <div class="rewrite-section">
+
+      <h2>
+
+        {{ section.section }}
+
+      </h2>
+
+      <h3>Rewritten Content</h3>
+
+      <pre>
+
+{{ section.rewrittenContent }}
+
+      </pre>
+
+      <h3>Explanation</h3>
+
+      <p>
+
+        {{ section.explanation }}
+
+      </p>
+
+    </div>
+
+    }
+
+  </mat-card-content>
+
+</mat-card>
+
+}

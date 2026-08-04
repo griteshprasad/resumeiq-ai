@@ -1,0 +1,32 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.quick-actions,
+.recent-activity {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recent-activity p {
+  color: #6b7280;
+  margin: 16px 0 24px;
+}

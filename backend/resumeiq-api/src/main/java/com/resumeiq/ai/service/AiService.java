@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.resumeiq.ai.exception.AiPromptException;
 import com.resumeiq.ai.exception.AiProviderException;
+import com.resumeiq.ai.exception.AiQuotaExceededException;
 import com.resumeiq.ai.exception.AiResponseParsingException;
 import com.resumeiq.ai.provider.AiClient;
 
@@ -29,6 +30,11 @@ public class AiService {
 			return aiClient.generateResponse(prompt);
 
 		} catch (Exception ex) {
+			
+			if (ex.getMessage().contains("429")) {
+		        throw new AiQuotaExceededException("AI quota exceeded.", ex);
+		    }
+			
 			throw new AiProviderException("Failed to communicate with AI provider.", ex);
 		}
 	}
@@ -43,6 +49,7 @@ public class AiService {
 			return objectMapper.readValue(response, responseType);
 
 		} catch (Exception ex) {
+			
 			throw new AiResponseParsingException("Unable to parse AI response.", ex);
 		}
 	}

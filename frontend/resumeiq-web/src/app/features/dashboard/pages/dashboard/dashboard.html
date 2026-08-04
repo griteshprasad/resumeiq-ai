@@ -1,3 +1,84 @@
-<h1>Dashboard</h1>
+<app-page-header
+  title="Dashboard"
+  subtitle="Welcome back to ResumeIQ AI">
+</app-page-header>
 
-<p>Welcome to ResumeIQ</p>
+<div class="stats-grid">
+
+  <app-stat-card
+    title="Resumes"
+    [value]="dashboard.resumeCount"
+    icon="description">
+  </app-stat-card>
+
+  <app-stat-card
+    title="Job Descriptions"
+    [value]="dashboard.jobDescriptionCount"
+    icon="work">
+  </app-stat-card>
+
+</div>
+
+<div class="quick-actions">
+
+  <h2>Quick Actions</h2>
+
+  <div class="button-group">
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateToResume()">
+
+      <mat-icon>description</mat-icon>
+
+      Manage Resumes
+
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateToJobDescriptions()">
+
+      <mat-icon>work</mat-icon>
+
+      Manage Job Descriptions
+
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateToAnalysis()">
+
+      <mat-icon>psychology</mat-icon>
+
+      Analyze Resume
+
+    </button>
+
+  </div>
+
+</div>
+
+<div class="recent-activity">
+
+  <h2>Recent Activity</h2>
+
+  <p>
+
+    No resume analyses have been performed yet.
+
+  </p>
+
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="navigateToAnalysis()">
+
+    Analyze Your First Resume
+
+  </button>
+
+</div>

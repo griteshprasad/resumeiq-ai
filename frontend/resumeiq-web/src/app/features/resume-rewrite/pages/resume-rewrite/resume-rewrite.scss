@@ -1,0 +1,100 @@
+:host {
+  display: block;
+}
+
+mat-card {
+  margin-bottom: 24px;
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+button[type="submit"] {
+  align-self: flex-start;
+  min-width: 180px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-card {
+  margin-top: 32px;
+}
+
+.rewrite-section {
+  padding: 24px 0;
+}
+
+.rewrite-section:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.rewrite-section h2 {
+  margin: 0 0 16px;
+  color: #2563eb;
+}
+
+.rewrite-section h3 {
+  margin: 20px 0 8px;
+  font-size: 16px;
+}
+
+.rewrite-section pre {
+  margin: 0;
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.rewrite-section p {
+  margin: 0;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+@media (max-width: 900px) {
+
+  .form-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  button[type="submit"] {
+
+    width: 100%;
+
+  }
+
+}

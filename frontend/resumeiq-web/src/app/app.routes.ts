@@ -32,7 +32,7 @@ export const routes: Routes = [
       },
       {
         path: 'rewrite',
-        loadComponent: () => import('./features/rewrite/pages/rewrite/rewrite').then(m => m.Rewrite)
+        loadComponent: () => import('./features/resume-rewrite/pages/resume-rewrite/resume-rewrite').then(m => m.ResumeRewrite)
       }
     ]
   },
